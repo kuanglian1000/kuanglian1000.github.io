@@ -1,0 +1,56 @@
+2023/03/30 What is difference of async and defer, when including JavaScript ?
+
+  JavaScript is case sensitive, and very fussy, 
+  so you need to enter the syntax exactly as shown, 
+  otherwise it may not work.
+
+  Script loading strategies(程式碼載入策略或時機)
+    1.your code won't work if the JavaScript is loaded and parsed 
+      before the HTML you are trying to do something to.
+    2.正確載入順序: HTML先 -> JavaScript後
+
+    #!--有問題的寫法, 可能會導致異常--
+    ex. JavaScript loaded before HTML body is parsed.
+      <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MDN JavaScript Sample</title>
+        <link rel="stylesheet" href="style.css">
+        <script>
+          // 內部JS
+        </script>
+      </head>
+      <script src="script.js" defer></script> //外部JS
+      <body>
+      </body>
+
+    #!--較好的寫法--
+    // 內部JS: 當"DOMContentLoaded" === HTML body完全載入並轉譯後, JavaScript就會執行.
+      document.addEventListener("DOMContentLoaded", () => {
+        // Do something;
+      });
+
+    // 外部JS: 延遲JS執行, 直到整份HTML完全載入後.
+      <script src="script.js" defer></script>
+
+    3.defer & async 有什麼不同呢??
+
+      a. async and defer both instruct the browser to download the script(s) in a separate thread, 
+        while the rest of the page (the DOM, etc.) is downloading, 
+        so the page loading is not blocked during the fetch process.
+        (async & defer 都指示瀏覽器同步下載JavaScript及頁面的Body, 所以頁面載入不會受到下載JavaScript的影響)
+
+      b. scripts with an <async> attribute will execute as soon as the download is complete. 
+        This blocks the page and does not guarantee any specific execution order.
+        (以 <async> 屬性載入的JavaScript, 在<某段JS載入後即可執行>, 但無法確保執行順序)
+
+      c. scripts with a <defer> attribute will load in the order 
+        they are in and will only execute once everything has finished loading.
+        (以 <defer> 屬性載入的JavaScript, 依照順序載入, 直到所有JavaScript完成載入後, <才可執行>)
+
+      d. If your scripts should be run immediately and they don't have any dependencies, then use async.
+        (如果你的JavaScript應該被立即執行, 而且沒有相互依賴時, 請用 <async> 屬性載入的JavaScript)
+      If your scripts need to wait for parsing and depend on other scripts and/or the DOM being in place, load them using defer and put their corresponding <script> elements in the order you want the browser to execute them.
+
+2023/03/31
