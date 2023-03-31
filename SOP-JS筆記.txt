@@ -53,4 +53,33 @@
         (如果你的JavaScript應該被立即執行, 而且沒有相互依賴時, 請用 <async> 屬性載入的JavaScript)
       If your scripts need to wait for parsing and depend on other scripts and/or the DOM being in place, load them using defer and put their corresponding <script> elements in the order you want the browser to execute them.
 
-2023/03/31
+2023/03/31  Comments 善用註解
+
+  1. 單行註解 // This function is for doing ....
+  2. 多行註解 /* Main functions are ... */
+  3. 一般而言, 多註解比少註解好, 
+    注意添加太多註解在變數上(變數名稱應該更為直覺intutive)
+    注意解釋簡單作業(程式碼可能太過複雜)
+
+  /* a first splash into JavaScript */
+
+  學寫程式最困難的地方不是語法, 而是如何應用程式來解決現實世界中的問題.
+  程式設計師會思考:
+  1. 程式要作什麼
+  2. 使用哪些程式碼特性來達成目標
+  3. 如何將這些程式碼組合在一起.
+
+  程式需求:
+  1.猜數量遊戲
+  2.從1-100間隨機取出1數字
+  3.玩家可以猜10次, 猜完後要回饋對或錯. 若為錯, 要回饋太高或太低.
+  4.結束條件
+    a.猜對
+    b.10次猜完.
+  5.結束後, 開啟玩家再玩1次的按鈕.
+
+  /* document.getElementById('id') 和 document.querySelector('<Tag>') */
+
+  document.getElementById('id') 會找出指定ID的DOM element
+  document.querySelector('p') 會找出 <第1個指定tag的DOM element>
+  document.querySelectorAll('p') 會找出 <所有指定tag的DOM elements>
